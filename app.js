@@ -9,9 +9,61 @@ const emptyMessage = document.getElementById('emptyMessage');
 const backToService = document.getElementById('backToService');
 const backToSpecialty = document.getElementById('backToSpecialty');
 
+// Variável global para armazenar os dados
+let excelData = [];
+
 // Inicializar a aplicação
 function initApp() {
-    loadServices();
+    loadExcelData();
+}
+
+// Carregar dados do arquivo Excel
+function loadExcelData() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'data.xlsx', true);
+    xhr.responseType = 'arraybuffer';
+    
+    xhr.onload = function(e) {
+        if (xhr.status === 200) {
+            try {
+                const arrayBuffer = xhr.response;
+                const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+                
+                // Pega a primeira planilha
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                
+                // Converte para JSON
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                
+                // Filtra apenas linhas com meta preenchida e mapeia para o formato antigo
+                excelData = jsonData
+                    .filter(row => row.meta && row.meta.toString().trim() !== '')
+                    .map(row => ({
+                        especialidade: row['Especialidade/procedimento'],
+                        servico: row['serviço'],
+                        meta: row.meta
+                    }));
+                
+                loadServices();
+                
+            } catch (error) {
+                console.error('Erro ao processar o arquivo Excel:', error);
+                emptyMessage.textContent = 'Erro ao carregar os dados. Verifique se o arquivo data.xlsx está na pasta.';
+                emptyMessage.style.display = 'block';
+            }
+        } else {
+            emptyMessage.textContent = 'Arquivo data.xlsx não encontrado. Coloque o arquivo na mesma pasta do site.';
+            emptyMessage.style.display = 'block';
+        }
+    };
+    
+    xhr.onerror = function() {
+        emptyMessage.textContent = 'Erro ao carregar o arquivo. Abra o site através de um servidor local.';
+        emptyMessage.style.display = 'block';
+    };
+    
+    xhr.send();
 }
 
 // Carregar serviços disponíveis
