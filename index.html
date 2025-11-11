@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Metas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Metas em TA</h1>
+            <p class="description">Selecione o serviço e a especialidade/procedimento para visualizar a meta</p>
+        </header>
+        
+        <div class="content">
+            <div class="step" id="step1">
+                <div class="step-title">
+                    <div class="step-number">1</div>
+                    <span>Serviço</span>
+                </div>
+                <select id="serviceSelect">
+                    <option value="">Selecione um serviço</option>
+                </select>
+            </div>
+            
+            <div class="step" id="step2" style="display: none;">
+                <div class="step-title">
+                    <div class="step-number">2</div>
+                    <span>Especialidade/Procedimento</span>
+                </div>
+                <select id="specialtySelect">
+                    <option value="">Selecione uma especialidade</option>
+                </select>
+                <button class="back-button" id="backToService">← Voltar</button>
+            </div>
+            
+            <div class="result" id="result" style="display: none;">
+                <div class="result-title">Meta:</div>
+                <div id="metaValue" class="meta-value"></div>
+                <button class="back-button" id="backToSpecialty">← Voltar</button>
+            </div>
+            
+            <div class="empty-message" id="emptyMessage" style="display: none;">
+                Nenhuma meta encontrada.
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
