@@ -1,6 +1,6 @@
 📊 Visualizador de Metas
 
-Sistema simples para consultar metas de especialidades médicas e procedimentos.
+Sistema simples para consultar metas em TA baseado no mapa de metas da atenção especializada.
 
 
 
