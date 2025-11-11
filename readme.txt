@@ -1,1 +1,0 @@
--06/10/205 : Foram incluídos dados de Setembro/2025 , em ambos .CSV e .XLSX
